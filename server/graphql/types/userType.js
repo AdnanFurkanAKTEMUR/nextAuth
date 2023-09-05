@@ -25,7 +25,7 @@ type Query {
 }
 type Mutation {
   createUser(input: createUserInput!): User
-  loginUser(input: loginInput): Boolean
+  loginUser(input: loginInput): User
 }
 
 `

@@ -10,18 +10,20 @@ const handler = NextAuth({
     CredentialsProvider({
       type: "credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "email" },
-        password: { label: "password", type: "password" },
+       
       },
       authorize(credantials, req) {
-        const { email, password } = credantials as {
+        const { email, name, id } = credantials as {
+          id: string
           email: string;
-          password: string;
+          name: string;
         };
-        if (email !== "adnan@gmail.com" || password !== "1234") {
-          return null;
+        if(email && name){
+          return {id:"id", name: name, email: email }
+        }else{
+          throw new Error("hata")
         }
-        return { id: "1234", name: "adnan", email: "adnan@gmail.com" };
+
       },
     }),
   ],

@@ -2,7 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextAuthProvider } from "./nextauthProvider";
-
+import { ApolloProvider } from '@apollo/client'
+import { ApolloWrapper } from "./apolloConfig/apolloClientWrapper";
+import client from "./apolloConfig/apolloClient"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}><NextAuthProvider>{children}</NextAuthProvider></body>
+      <body className={inter.className}><ApolloWrapper><NextAuthProvider>{children}</NextAuthProvider></ApolloWrapper></body>
     </html>
   );
 }

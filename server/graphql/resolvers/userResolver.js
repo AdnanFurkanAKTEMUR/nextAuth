@@ -32,9 +32,9 @@ module.exports = {
         const user = await userCollection.findOne({ email: input?.email })
         const dogrula = await bcrypt.compare(input?.password, user.password)
         if(dogrula && user){
-          return true
+          return user
         }else {
-          return false
+          return null
         }
       }catch (e){
         throw new Error(e)
