@@ -1,5 +1,4 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth/next";
 const dotenv = require("dotenv");

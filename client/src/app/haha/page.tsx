@@ -10,10 +10,12 @@ export default function Home() {
   }
   console.log(session.data?.user)
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <span>hi there</span>
+    <main className="">
+      <p>hi there</p>
+      <p>Name: {session.data?.user?.name}</p>
+      <p>Email: {session.data?.user?.email}</p>
       <p onClick={()=>{
-        signOut()
+        signOut({callbackUrl:"/auth"})
       }}>logout</p>
     </main>
   )
