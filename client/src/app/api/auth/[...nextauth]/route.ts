@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import NextAuth from "next-auth/next";
 const dotenv = require("dotenv");
 dotenv.config();
+import clientMongo from "@/app/mongo/mongo";
 
 const handler = NextAuth({
   session: {
@@ -20,33 +21,12 @@ const handler = NextAuth({
           email: string;
           password: string;
         };
-        let clientMongo: any;
-        async function mongo() {
-          clientMongo = new MongoClient(
-            process.env.MONGO_URL ? process.env.MONGO_URL : ""
-          );
-          try {
-            await clientMongo.connect();
-            console.log("mongodb connected");
-          } catch (e) {
-            console.log("failed mongodb connected");
-          } finally {
-            //await client.close()
-          }
-        }
-
-        await mongo();
-        let user: any;
-        if (clientMongo) {
-          const userCollection = await clientMongo
-            .db("next-auth")
-            .collection("user");
-          user = await userCollection.findOne({ email: email });
-          console.log(user);
-        }
-        const dogrula = await bcrypt.compare(password, user.password);
-        console.log(password);
-        if (user && dogrula) {
+        await clientMongo.connect();
+        const userCollection = await clientMongo.db("next-auth").collection("user");
+        const user = await userCollection.findOne({ email: email });
+        const verify = await bcrypt.compare(password, user.password);
+        await clientMongo.close();
+        if (user && verify) {
           return { _id: user._id, name: user.name, email: user.email };
         } else {
           throw new Error("hata");
@@ -59,14 +39,12 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }: any) {
-      /* Step 1: update the token based on the user object */
       if (user) {
         token._id = user._id;
       }
       return token;
     },
     session({ session, token }: any) {
-      /* Step 2: update the session.user based on the token object */
       if (token && session.user) {
         session.user._id = token._id;
       }
