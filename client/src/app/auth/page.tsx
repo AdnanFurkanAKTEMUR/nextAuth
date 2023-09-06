@@ -9,31 +9,15 @@ export default function SignIn() {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const handleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-    await login({
-      variables:{
-        input:{
-          email:userInfo.email,
-          password: userInfo.password
-        }
-      }
-    })
-
-  };
-  const myFoo = async () => {
     const res = await signIn('credentials', {
-      email: data?.loginUser.email,
-      name: data?.loginUser.name,
+      email: userInfo.email,
+      password: userInfo.password,
       redirect: false
     })
     console.log(res)
-  }
-  useEffect(()=>{
-    console.log(data?.loginUser);
-    if(data){
-      myFoo()
-    }
-    
-  },[data])
+
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
