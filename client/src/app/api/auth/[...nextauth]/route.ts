@@ -26,7 +26,7 @@ const handler = NextAuth({
         const verify = await bcrypt.compare(password, user.password);
         await clientMongo.close();
         if (user && verify) {
-          return { _id: user._id, name: user.name, email: user.email };
+          return { _id: user._id, name: user.name, email: user.email, role:user.role };
         } else {
           throw new Error("hata");
         }
@@ -34,18 +34,20 @@ const handler = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth",
+    signIn: "/login",
   },
   callbacks: {
     async jwt({ token, user }: any) {
       if (user) {
         token._id = user._id;
+        token.role = user.role
       }
       return token;
     },
     session({ session, token }: any) {
       if (token && session.user) {
         session.user._id = token._id;
+        session.user.role = token.role;
       }
       return session;
     },
