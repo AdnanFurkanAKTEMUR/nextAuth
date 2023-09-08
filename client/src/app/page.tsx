@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { getServerSession } from "next-auth";
+import { useState } from 'react'
 
 export default function Home() {
   const session = useSession();
