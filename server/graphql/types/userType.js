@@ -17,9 +17,11 @@ input createUserInput {
   role: String
 }
 
-input loginInput {
-  email: String!
-  password: String!
+input editUserInput{
+  _id: String
+  name: String
+  email: String
+  role: String
 }
 
 type Query {
@@ -27,7 +29,7 @@ type Query {
 }
 type Mutation {
   createUser(input: createUserInput!): User
-  loginUser(input: loginInput): User
+  editUser(input: editUserInput): User
 }
 
 `

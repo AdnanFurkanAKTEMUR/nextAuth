@@ -10,3 +10,14 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const EDIT_USER = gql`
+  mutation EditUser($input: editUserInput) {
+    editUser(input: $input) {
+      _id
+      name
+      email
+      role
+    }
+  }
+`;

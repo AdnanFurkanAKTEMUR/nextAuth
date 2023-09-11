@@ -153,7 +153,7 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem key={"Account"} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Account</Typography>
+                  <Typography textAlign="center" component={'a'} href='/edituser' >Account</Typography>
                 </MenuItem>
                 <MenuItem key={"logout"} onClick={async ()=>{
                   await signOut()

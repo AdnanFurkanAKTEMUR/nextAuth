@@ -19,6 +19,7 @@ module.exports = {
           name: input?.name,
           password: encriptedPass,
           email: input?.email,
+          role: input?.role
         })
         const createdUser = await userCollection.findOne({ _id: user.insertedId })
         return createdUser
@@ -26,16 +27,18 @@ module.exports = {
         throw new Error(e)
       }
     },
-    loginUser:async (_, { input }, { req, res, client }) => {
+    
+    editUser: async (_, { input }, { req, res, client }) => {
       try{
         const userCollection = await client.db("next-auth").collection("user")
-        const user = await userCollection.findOne({ email: input?.email })
-        const dogrula = await bcrypt.compare(input?.password, user.password)
-        if(dogrula && user){
-          return user
-        }else {
-          return null
-        }
+        await userCollection.updateOne({_id: new ObjectId(input?._id)},{$set:{
+          name: input?.name,
+          email: input?.email,
+          role: input?.role
+        }})
+        
+        const updatedUser = await userCollection.findOne({ _id: new ObjectId(input?._id) })
+        return updatedUser
       }catch (e){
         throw new Error(e)
       }
