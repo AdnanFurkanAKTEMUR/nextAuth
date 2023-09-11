@@ -11,6 +11,9 @@ export default withAuth(
     if (request.nextUrl.pathname.startsWith("/admin") && request.nextauth.token?.role !== "admin") {
       return NextResponse.rewrite(new URL("/denied", request.url));
     }
+    if (request.nextUrl.pathname.startsWith("/user") && (request.nextauth.token?.role !== "admin" && request.nextauth.token?.role !== "user")) {
+      return NextResponse.rewrite(new URL("/denied", request.url));
+    }
   },
   {
     callbacks: {
@@ -19,4 +22,4 @@ export default withAuth(
   }
 );
 
-export const config = { matcher: ['/admin/:path*', '/dashboard/:path*'], };
+export const config = { matcher: ['/admin/:path*', '/user/:path*'], };
