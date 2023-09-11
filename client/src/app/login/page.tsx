@@ -21,7 +21,7 @@ const Login = () => {
       <section>
         <div className="form-box">
           <div className="form-value">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
               <h2>Login</h2>
               <div className="inputbox">
                 <input
