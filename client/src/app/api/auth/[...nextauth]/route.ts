@@ -38,7 +38,14 @@ const handler = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, session, trigger }: any) {
+      console.log(session, "session");
+      if(trigger == "update" && session){
+        token.name = session.name
+        token.email = session.email
+        token.role = session.role
+      }
+
       if (user) {
         token._id = user._id;
         token.role = user.role

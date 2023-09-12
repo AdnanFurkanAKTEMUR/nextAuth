@@ -23,14 +23,13 @@ interface User {
 
 const EditUser = (props: any) => {
   const [editUserMutation, { data, loading, error }] = useMutation(EDIT_USER);
-const session = useSession()
+  const session = useSession();
   const [user, setUser] = useState<User>({ name: props.user.name, email: props.user.email, role: props.user.role });
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setUser((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-console.log(session.update);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await editUserMutation({
@@ -44,12 +43,9 @@ console.log(session.update);
       },
     });
   };
-  if (data){
-    console.log(data.editUser)
-    
-
-    return( <>update başarılı</>);
-  } 
+  if (data) {
+    session.update(data.editUser);
+  }
   return (
     <>
       <div className="text-center mt-5">
