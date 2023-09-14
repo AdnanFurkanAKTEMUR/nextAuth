@@ -21,7 +21,7 @@ const EditUser = () => {
     const { name, value } = event.target;
     setUser((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  console.log(user);
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await createUserMutation({

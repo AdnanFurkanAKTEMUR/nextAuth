@@ -13,9 +13,7 @@ const Login = () => {
       redirect: true,
       callbackUrl: "/",
     });
-    console.log(res);
   };
-  console.log(userInfo);
   return (
     <>
       <section>
